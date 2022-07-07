@@ -1,4 +1,5 @@
 # GOSSIP-ENGINE
+### A PART OF GOSSIP INTERNAL ARCHITECTURE...
 
 A microservice that get the request forwarded by websocket gateway and process them. It get the request by a rabbitmq channel/queue.
 
