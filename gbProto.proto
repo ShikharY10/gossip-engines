@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package main;
+
+option go_package="./gbp";
+
+message ChatPayload {
+    string Tid = 1;
+    string Sid = 2;
+    string Msg = 3;
+}
+
+message Transport {
+    bytes Msg = 1;
+    string Id = 2;
+    int32 Tp = 3;
+}
+
+message MsgFormat {
+    string Sid = 1;
+    string Msg = 2;
+    string Mloc = 3;
+}
+
+message RecvNotify {
+    string UId = 1;
+    string MId = 2;
+    int32 Tp = 3;
+}
+
+message SendNotify {
+    string TMid = 1;
+    bytes data = 2;
+}
+
+message ChatAck {
+    string MId = 1;
+    string MLoc = 2;
+}
+
+message SaveFormat {
+    int32 Tp = 1;
+    bytes data = 2;
+}
+
+message HandShackP1 {
+    string TargetMobile = 1;
+    string SenderMID = 2;
+    string PublicKey = 3;
+    string Hsid = 4;
+    string Mloc = 5;
+}
+
+message HandShackP2 {
+    string EncryptedData = 1;
+    string TargetMID = 2;
+    string SenderMID = 3;
+    string Hsid = 4;
+    string Mloc = 5;
+    int32 Permit = 6;
+}
+
+message ConnDataTransfer {
+    string Name = 1;
+    string Number = 2;
+    string MID = 3;
+    string ProfilePic = 4;
+    string Hsid = 5;
+    string Mloc = 6;
+}
+
+message HandshakeDeleteNotify {
+    string SenderMID = 1;
+    string TargetMID = 2;
+    string Number = 3;
+    string Mloc = 4;
+}
+
+message ChangeProfilePayload {
+    string PicData = 1;
+    string SenderMID = 2;
+    string TargetMID = 3;
+    string Mloc = 4;
+}
+
+message ChangeProfilePayloads {
+    repeated string all = 1;
+    string PicData = 2;
+    string SenderMID = 3;
+}
+
+message NotifyChangeNumber {
+    string Number = 1;
+    string SenderMID = 2;
+    string TargetMID = 3;
+    string Mloc = 4;
+}
+
+message NotifyChangeNumbers {
+    repeated string all = 1;
+    string Number = 2;
+    string SenderMID = 3;
+}
+
+
+// export PATH=$PATH:~/go/bin
+// protoc -I. --go_out=. ./gbProto.proto
