@@ -1029,6 +1029,219 @@ func (x *NotifyChangeNumbers) GetSenderMID() string {
 	return ""
 }
 
+type LoginEnginePayload struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AllConn   []string `protobuf:"bytes,1,rep,name=AllConn,proto3" json:"AllConn,omitempty"`
+	SenderMid string   `protobuf:"bytes,2,opt,name=SenderMid,proto3" json:"SenderMid,omitempty"`
+	PublicKey string   `protobuf:"bytes,3,opt,name=PublicKey,proto3" json:"PublicKey,omitempty"`
+}
+
+func (x *LoginEnginePayload) Reset() {
+	*x = LoginEnginePayload{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_gbProto_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginEnginePayload) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginEnginePayload) ProtoMessage() {}
+
+func (x *LoginEnginePayload) ProtoReflect() protoreflect.Message {
+	mi := &file_gbProto_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginEnginePayload.ProtoReflect.Descriptor instead.
+func (*LoginEnginePayload) Descriptor() ([]byte, []int) {
+	return file_gbProto_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *LoginEnginePayload) GetAllConn() []string {
+	if x != nil {
+		return x.AllConn
+	}
+	return nil
+}
+
+func (x *LoginEnginePayload) GetSenderMid() string {
+	if x != nil {
+		return x.SenderMid
+	}
+	return ""
+}
+
+func (x *LoginEnginePayload) GetPublicKey() string {
+	if x != nil {
+		return x.PublicKey
+	}
+	return ""
+}
+
+type ConnectionKey struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Number    string `protobuf:"bytes,1,opt,name=Number,proto3" json:"Number,omitempty"`
+	Key       string `protobuf:"bytes,2,opt,name=Key,proto3" json:"Key,omitempty"`
+	SenderMid string `protobuf:"bytes,3,opt,name=SenderMid,proto3" json:"SenderMid,omitempty"`
+	Mloc      string `protobuf:"bytes,4,opt,name=Mloc,proto3" json:"Mloc,omitempty"`
+	TargetMid string `protobuf:"bytes,5,opt,name=TargetMid,proto3" json:"TargetMid,omitempty"`
+}
+
+func (x *ConnectionKey) Reset() {
+	*x = ConnectionKey{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_gbProto_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ConnectionKey) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConnectionKey) ProtoMessage() {}
+
+func (x *ConnectionKey) ProtoReflect() protoreflect.Message {
+	mi := &file_gbProto_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConnectionKey.ProtoReflect.Descriptor instead.
+func (*ConnectionKey) Descriptor() ([]byte, []int) {
+	return file_gbProto_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ConnectionKey) GetNumber() string {
+	if x != nil {
+		return x.Number
+	}
+	return ""
+}
+
+func (x *ConnectionKey) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *ConnectionKey) GetSenderMid() string {
+	if x != nil {
+		return x.SenderMid
+	}
+	return ""
+}
+
+func (x *ConnectionKey) GetMloc() string {
+	if x != nil {
+		return x.Mloc
+	}
+	return ""
+}
+
+func (x *ConnectionKey) GetTargetMid() string {
+	if x != nil {
+		return x.TargetMid
+	}
+	return ""
+}
+
+type LKeyShareRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SenderMid string `protobuf:"bytes,1,opt,name=SenderMid,proto3" json:"SenderMid,omitempty"`
+	TargetMid string `protobuf:"bytes,2,opt,name=targetMid,proto3" json:"targetMid,omitempty"`
+	PublicKey string `protobuf:"bytes,3,opt,name=PublicKey,proto3" json:"PublicKey,omitempty"`
+	Mloc      string `protobuf:"bytes,4,opt,name=Mloc,proto3" json:"Mloc,omitempty"`
+}
+
+func (x *LKeyShareRequest) Reset() {
+	*x = LKeyShareRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_gbProto_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LKeyShareRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LKeyShareRequest) ProtoMessage() {}
+
+func (x *LKeyShareRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gbProto_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LKeyShareRequest.ProtoReflect.Descriptor instead.
+func (*LKeyShareRequest) Descriptor() ([]byte, []int) {
+	return file_gbProto_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *LKeyShareRequest) GetSenderMid() string {
+	if x != nil {
+		return x.SenderMid
+	}
+	return ""
+}
+
+func (x *LKeyShareRequest) GetTargetMid() string {
+	if x != nil {
+		return x.TargetMid
+	}
+	return ""
+}
+
+func (x *LKeyShareRequest) GetPublicKey() string {
+	if x != nil {
+		return x.PublicKey
+	}
+	return ""
+}
+
+func (x *LKeyShareRequest) GetMloc() string {
+	if x != nil {
+		return x.Mloc
+	}
+	return ""
+}
+
 var File_gbProto_proto protoreflect.FileDescriptor
 
 var file_gbProto_proto_rawDesc = []byte{
@@ -1126,8 +1339,31 @@ var file_gbProto_proto_rawDesc = []byte{
 	0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4e, 0x75,
 	0x6d, 0x62, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x49,
 	0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d,
-	0x49, 0x44, 0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f, 0x67, 0x62, 0x70, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x49, 0x44, 0x22, 0x6a, 0x0a, 0x12, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x45, 0x6e, 0x67, 0x69, 0x6e,
+	0x65, 0x50, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x41, 0x6c, 0x6c, 0x43,
+	0x6f, 0x6e, 0x6e, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x41, 0x6c, 0x6c, 0x43, 0x6f,
+	0x6e, 0x6e, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64,
+	0x12, 0x1c, 0x0a, 0x09, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x22, 0x89,
+	0x01, 0x0a, 0x0d, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79,
+	0x12, 0x16, 0x0a, 0x06, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x10, 0x0a, 0x03, 0x4b, 0x65, 0x79, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x65,
+	0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53,
+	0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x4d, 0x6c, 0x6f, 0x63,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4d, 0x6c, 0x6f, 0x63, 0x12, 0x1c, 0x0a, 0x09,
+	0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x4d, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x4d, 0x69, 0x64, 0x22, 0x80, 0x01, 0x0a, 0x10, 0x4c,
+	0x4b, 0x65, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1c, 0x0a, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x4d, 0x69, 0x64, 0x12, 0x1c, 0x0a,
+	0x09, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x4d, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x4d, 0x69, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x50,
+	0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x4d, 0x6c, 0x6f,
+	0x63, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4d, 0x6c, 0x6f, 0x63, 0x42, 0x07, 0x5a,
+	0x05, 0x2e, 0x2f, 0x67, 0x62, 0x70, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1142,7 +1378,7 @@ func file_gbProto_proto_rawDescGZIP() []byte {
 	return file_gbProto_proto_rawDescData
 }
 
-var file_gbProto_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_gbProto_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_gbProto_proto_goTypes = []interface{}{
 	(*ChatPayload)(nil),           // 0: main.ChatPayload
 	(*Transport)(nil),             // 1: main.Transport
@@ -1159,6 +1395,9 @@ var file_gbProto_proto_goTypes = []interface{}{
 	(*ChangeProfilePayloads)(nil), // 12: main.ChangeProfilePayloads
 	(*NotifyChangeNumber)(nil),    // 13: main.NotifyChangeNumber
 	(*NotifyChangeNumbers)(nil),   // 14: main.NotifyChangeNumbers
+	(*LoginEnginePayload)(nil),    // 15: main.LoginEnginePayload
+	(*ConnectionKey)(nil),         // 16: main.ConnectionKey
+	(*LKeyShareRequest)(nil),      // 17: main.LKeyShareRequest
 }
 var file_gbProto_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -1354,6 +1593,42 @@ func file_gbProto_proto_init() {
 				return nil
 			}
 		}
+		file_gbProto_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginEnginePayload); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_gbProto_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ConnectionKey); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_gbProto_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LKeyShareRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1361,7 +1636,7 @@ func file_gbProto_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_gbProto_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

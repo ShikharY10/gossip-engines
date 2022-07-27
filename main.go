@@ -470,6 +470,106 @@ func (m *MAIN) HandleJob() {
 					m.ProducePayload(9, targetCipherText, mid, tNodeName)
 				}
 			}
+		} else if trans.Tp == 10 {
+			var loginPayload gbp.LoginEnginePayload
+			err := proto.Unmarshal(trans.Msg, &loginPayload)
+			if err != nil {
+				log.Panicln("[T10-PROTOUNMERROR] : ", err.Error())
+				continue
+			}
+			for _, mid := range loginPayload.AllConn {
+
+				Mloc := utils.GenerateRandomId()
+				targetmainKey := m.MongoDB.GetMainKey(mid)
+
+				var connReq gbp.LKeyShareRequest
+				connReq.TargetMid = mid
+				connReq.SenderMid = loginPayload.SenderMid
+				connReq.PublicKey = loginPayload.PublicKey
+				connReq.Mloc = Mloc
+
+				connReqbytes, err := proto.Marshal(&connReq)
+				if err != nil {
+					log.Println("[T10-PROTOMARSHALERROR] : ", err.Error())
+				}
+
+				targetCipherText, err := utils.AesEncryption(utils.Decode(targetmainKey), connReqbytes)
+				if err != nil {
+					log.Println("[T9-AESENCERROR] : ", err.Error())
+					continue
+				}
+
+				var sF gbp.SaveFormat
+				sF.Tp = 10
+				sF.Data = targetCipherText
+				PsF, err := proto.Marshal(&sF)
+				if err != nil {
+					log.Println("[T9-PROTOMARSHALERROR3] : ", err.Error())
+				}
+
+				err = m.MongoDB.InsertMsg(mid, Mloc, PsF)
+				if err != nil {
+					log.Println("[T9-MONGOINSERTERROR] : ", err.Error())
+				}
+
+				tNodeName, err := m.getNodeName(mid)
+				if err == nil {
+					m.ProducePayload(10, targetCipherText, mid, tNodeName)
+				}
+			}
+		} else if trans.Tp == 11 {
+			smk := m.MongoDB.GetMainKey(trans.Id)
+			plaintext, err := utils.AesDecryption(utils.Decode(smk), trans.Msg)
+			if err != nil {
+				log.Println("[T11-AESDECRERRROR3] : ", err.Error())
+				continue
+			}
+
+			var connKey gbp.ConnectionKey
+			err = proto.Unmarshal(plaintext, &connKey)
+			if err != nil {
+				log.Println("[T5-PROTOUNMERROR3] : ", err.Error())
+				continue
+			}
+
+			tmk := m.MongoDB.GetMainKey(connKey.TargetMid)
+			Mloc := utils.GenerateRandomId()
+
+			var newConnKey gbp.ConnectionKey
+			newConnKey.Key = connKey.Key
+			newConnKey.Mloc = Mloc
+			newConnKey.Number = connKey.Number
+			newConnKey.SenderMid = connKey.SenderMid
+			newConnKey.TargetMid = connKey.TargetMid
+
+			newConnKeyBytes, err := proto.Marshal(&newConnKey)
+			if err != nil {
+				log.Println("[T11-PROTOMARSHALERROR]", err.Error())
+			}
+
+			cipherText, err := utils.AesEncryption(utils.Decode(tmk), newConnKeyBytes)
+			if err != nil {
+				log.Println("T11-AESENCERROR", err.Error())
+			}
+
+			var sF gbp.SaveFormat
+			sF.Tp = 11
+			sF.Data = cipherText
+			PsF, err := proto.Marshal(&sF)
+			if err != nil {
+				log.Println("[T9-PROTOMARSHALERROR3] : ", err.Error())
+			}
+
+			err = m.MongoDB.InsertMsg(connKey.TargetMid, Mloc, PsF)
+			if err != nil {
+				log.Println("[T9-MONGOINSERTERROR] : ", err.Error())
+			}
+
+			tNodeName, err := m.getNodeName(connKey.TargetMid)
+			if err == nil {
+				m.ProducePayload(11, cipherText, connKey.TargetMid, tNodeName)
+			}
+
 		}
 	}
 }

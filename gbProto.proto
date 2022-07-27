@@ -102,6 +102,27 @@ message NotifyChangeNumbers {
     string SenderMID = 3;
 }
 
+message LoginEnginePayload {
+    repeated string AllConn = 1;
+    string SenderMid = 2;
+    string PublicKey = 3;
+}
+
+message ConnectionKey {
+    string Number = 1;
+    string Key = 2;
+    string SenderMid = 3;
+    string Mloc = 4;
+    string TargetMid = 5;
+}
+
+message LKeyShareRequest {
+    string SenderMid = 1;
+    string targetMid = 2;
+    string PublicKey = 3;
+    string Mloc = 4;
+}
+
 
 // export PATH=$PATH:~/go/bin
 // protoc -I. --go_out=. ./gbProto.proto
