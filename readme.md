@@ -1,10 +1,15 @@
-# GOSSIP-ENGINE
-### A PART OF GOSSIP INTERNAL ARCHITECTURE...
+<div align="center">
+  <img src="https://github.com/ShikharY10/gossip/raw/master/images/logo.png" alt="Magator Logo" width="320" height="300">
+  <h1>GossiP</h1>
+  <strong>A Open Source Social Media Project</strong>
+  <h6>Support E2E Encrypted messaging and image posting.</h6>
+</div>
+<br>
 
-A microservice that get the request forwarded by websocket gateway and process them. It get the request by a rabbitmq channel/queue.
+<hr>
 
-It get the request in proper format and used Protobuf protocol for communication with other services.
+<div align="center">
+  <h1>GossiP Worker Service</h1>
+</div>
 
-The main function of this microservice is to pypass the chat message that are comming from users.
-
-This services garranties that the chat message will be delivered to target user.
+It is a worker service that is used as intermediatory between Gateway and APIs services, it is also used to perform CPU intensive task that may also effect the network performance.

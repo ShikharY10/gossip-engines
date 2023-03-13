@@ -1,5 +1,10 @@
-/go.mod
-/go.sum
+# /go.mod
+# /go.sum
 /gossip-engine.tgz
 /helper.txt
-
+/.env
+/handler/mongodb.go
+/handler/redisdb.go
+/handler/rabbitmq.go
+/protobuf
+/Dockerfile

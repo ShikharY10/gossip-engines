@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package main;
+
+option go_package= "./schema";
+
+message Payload {
+    bytes Data = 1;
+    string Type = 2;
+}
+
+message DeliveryPacket {
+    bytes Payload = 1;
+    string TargetId = 2;
+}
+
+//SubTYpe////////////////////////////////////////////////////
+message PushNotification {
+    bytes Data = 1;
+    string Type = 2;
+}
+    // 1. MakePartnerRequest
+    // 2. MakePartnerResponse
+    // 3. NewMessage
+    // 5. RemovePartnerNotification
+
+message MakePartnerRequest {
+    string RequestId = 1;
+    string TransferId = 2;
+    string PayloadKey = 3;
+    string SenderId = 4;
+    string TargetId = 5;
+    string PublicKey = 6;
+    string Token = 7;
+}
+
+message MakePartnerResponse {
+    string ResponseId = 1;
+    string TransferId = 2;
+    string PayloadKey = 3;
+    string SenderId = 4;
+    string TargetId = 5;
+    bool IsAccepted = 6;
+    string AesKey = 7;
+    string Token = 8;
+}
+
+message NewMessage {
+    string TransferId = 1;
+    string PayloadKey = 2;
+    string Data = 3;
+    string SenderId = 4;
+    string TargetId = 5;
+}
+
+message RemovePartnerNotification {
+    string RemovedId = 1;
+    string RemoverID = 2;
+}
+
+
+//SubType/////////////////////////////////////////////////////
+message Messaging {
+    bytes Data = 1;
+    string Type = 2;
+}
+
+message PayloadAcknowledgement {
+    string TransferId = 1;
+    string PayloadKey = 2;
+}
+    // 1. NewChat
+    // 2. NewChatAcknowledgement
+
+//SubType/////////////////////////////////////////////////////
+
+message Partner {
+    bytes Data = 1;
+    string Type = 2;
+}
+    // 1. MakePartnerRequest
+    // 2. MakePartnerResponse
+    // 3. MakePartner
+    // 5. RemovePatnerNotification
+
+//SubType/////////////////////////////////////////////////////
