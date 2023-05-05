@@ -9,46 +9,65 @@ import (
 	"log"
 )
 
-func main() {
-	// LOADING ENVIRONMENT VARIABLES
-	ENV := config.LoadENV()
+// / struct that contains all environment variables
+var ENV *config.ENV
 
-	logger, err := admin.InitializeLogger(ENV, "engine")
+// a remote logging mechanism
+var LOGGER *admin.Logger
+
+// a struct which has the access to the all the resources that is
+// required for this engine to work properly
+var HANDLERS handler.Handler
+
+func init() {
+
+	var err error
+
+	// LOADING ENVIRONMENT VARIABLES
+	ENV = config.LoadENV()
+
+	LOGGER, err = admin.InitializeLogger(ENV, "engine")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("[LOGGER ERROR] : ", err)
 	}
 
-	db, err := config.ConnectToDBs(ENV)
+	db, err := config.MongoDBConnect(ENV)
 	if err != nil {
-		logger.LogError(err)
-		log.Fatal(err)
+		log.Fatal("[MONGODB ERROR] : ", err)
+	}
+
+	cache, err := config.ConnectRedis(ENV)
+	if err != nil {
+		log.Fatal("[REDIS ERROR] : ", err)
 	}
 
 	queue, err := config.ConnectToQueue(ENV)
 	if err != nil {
-		logger.LogError(err)
-		log.Fatal(err)
+		log.Fatal("[RABBITMQ ERROR] : ", err)
 	}
 
-	handler_v1 := handler.Handler{
+	HANDLERS = handler.Handler{
 		DataBase: &handler.DataBaseHandler{
-			Mongo:  *db.MongoDB,
-			Logger: logger,
+			Mongo:  *db,
+			Logger: LOGGER,
 		},
 		Cache: &handler.CacheHandler{
-			RedisClient: db.RedisDB,
-			Logger:      logger,
+			RedisClient: cache,
+			Logger:      LOGGER,
 		},
 		Queue: &handler.QueueHandler{
 			Queue:  *queue,
-			Logger: logger,
+			Logger: LOGGER,
 		},
 	}
+}
+
+func main() {
 
 	ctrl := controller_v1.Controller{
-		Handler: &handler_v1,
-		Logger:  logger,
+		Handler: &HANDLERS,
+		Logger:  LOGGER,
 	}
 
-	routes.HandleJob(&ctrl, logger)
+	routes.HandleJob(&ctrl, LOGGER)
 }
