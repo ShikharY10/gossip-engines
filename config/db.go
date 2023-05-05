@@ -2,79 +2,67 @@ package config
 
 import (
 	"context"
-	"log"
 	"time"
 
-	"github.com/go-redis/redis"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type DataBase struct {
-	MongoDB *MongoDB
-	RedisDB *redis.Client
-}
-
 type MongoDB struct {
-	Users    *mongo.Collection
-	Posts    *mongo.Collection
-	Delivery *mongo.Collection
+	PostImage   *mongo.Collection
+	AvatarImage *mongo.Collection
+	Users       *mongo.Collection
+	Posts       *mongo.Collection
+	Frequnecy   *mongo.Collection
+	Payloads    *mongo.Collection
 }
 
-func ConnectToDBs(env *ENV) (*DataBase, error) {
-	var db DataBase
-	mongoClient, err := db.mongoDB()
-	if err != nil {
-		return nil, err
-	}
-	redisClient, err := db.redisDB()
-	if err != nil {
-		return nil, err
-	}
-	return &DataBase{
-		MongoDB: mongoClient,
-		RedisDB: redisClient,
-	}, nil
-}
-
-func (db *DataBase) mongoDB() (*MongoDB, error) {
-	mongoIP := ""
-	var credential options.Credential
-	credential.Username = ""
-	credential.Password = ""
-
+func MongoDBConnect(env *ENV) (*MongoDB, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	clientOptions := options.Client().ApplyURI("mongodb://" + mongoIP + ":27017").SetAuth(credential)
-	client, err := mongo.Connect(ctx, clientOptions)
+	var mongoClient *mongo.Client
+	var err error
+
+	if env.MongoDBConnectionMethod == "manual" {
+		credential := options.Credential{
+			Username: env.MongoDBUsername,
+			Password: env.MOngoDBPassword,
+		}
+
+		clientOptions := options.Client().ApplyURI("mongodb://" + env.MongoDBHost + ":" + env.MongoDBPort).SetAuth(credential)
+		mongoClient, err = mongo.Connect(ctx, clientOptions)
+		if err != nil {
+			defer cancel()
+			return nil, err
+		}
+	} else if env.MongoDBConnectionMethod == "auto" {
+		serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+		clientOptions := options.Client().ApplyURI(env.MongoDBConnectionString).SetServerAPIOptions(serverAPIOptions)
+		mongoClient, err = mongo.Connect(ctx, clientOptions)
+		if err != nil {
+			defer cancel()
+			return nil, err
+		}
+	}
+	err = mongoClient.Ping(ctx, nil)
 	if err != nil {
+		defer cancel()
 		return nil, err
 	}
 
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var mongo MongoDB
-	storage := client.Database("storage")
-	mongo.Users = storage.Collection("users")
-	mongo.Posts = storage.Collection("posts")
-	mongo.Delivery = storage.Collection("delivery")
+	var mongodb MongoDB
 
-	return &mongo, nil
-}
+	images := mongoClient.Database("images")
+	mongodb.PostImage = images.Collection("post")
+	mongodb.AvatarImage = images.Collection("avatar")
 
-func (db *DataBase) redisDB() (*redis.Client, error) {
-	redisIP := "127.0.0.1"
-	options := redis.Options{
-		Addr:     redisIP + ":6379",
-		Password: "",
-		DB:       0,
-	}
-	client := redis.NewClient(&options)
-	ping := client.Ping()
-	if ping.Err() != nil {
-		return nil, ping.Err()
-	}
-	return client, nil
+	storage := mongoClient.Database("storage")
+	mongodb.Users = storage.Collection("user")
+	mongodb.Posts = storage.Collection("posts")
+	mongodb.Frequnecy = storage.Collection("userFrequencyTable")
+
+	delivery := mongoClient.Database("delivery")
+	mongodb.Payloads = delivery.Collection("payloads")
+
+	defer cancel()
+	return &mongodb, nil
 }
