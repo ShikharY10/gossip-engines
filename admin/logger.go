@@ -31,8 +31,6 @@ func InitializeLogger(env *config.ENV, serviceType string) (*Logger, error) {
 		name:        env.EngineName,
 		serviceType: serviceType,
 	}
-
-	logger.testLogger()
 	return logger, nil
 }
 
