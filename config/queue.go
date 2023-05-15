@@ -4,7 +4,7 @@ import "github.com/streadway/amqp"
 
 type Queue struct {
 	queue   *amqp.Queue
-	channel *amqp.Channel
+	Channel *amqp.Channel
 	Jobs    <-chan amqp.Delivery
 }
 
@@ -31,7 +31,7 @@ func ConnectToQueue(env *ENV) (*Queue, error) {
 
 	return &Queue{
 		queue:   &queue,
-		channel: channel,
+		Channel: channel,
 		Jobs:    jobsChan,
 	}, nil
 }

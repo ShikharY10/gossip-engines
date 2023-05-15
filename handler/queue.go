@@ -3,6 +3,8 @@ package handler
 import (
 	"gbEngine/admin"
 	"gbEngine/config"
+
+	"github.com/streadway/amqp"
 )
 
 type QueueHandler struct {
@@ -10,6 +12,15 @@ type QueueHandler struct {
 	Logger *admin.Logger
 }
 
-func (queue *QueueHandler) Produce(nodeName string, data []byte) error {
-	return nil
+func (queue *QueueHandler) Produce(queueName string, data []byte) error {
+	err := queue.Queue.Channel.Publish(
+		"",
+		queueName,
+		false,
+		false,
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        data,
+		})
+	return err
 }

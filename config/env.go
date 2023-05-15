@@ -1,6 +1,8 @@
 package config
 
 import (
+	"crypto/sha1"
+	"fmt"
 	"gbEngine/utils"
 	"os"
 
@@ -121,7 +123,12 @@ func LoadENV() *ENV {
 	if found {
 		env.EngineName = value
 	} else {
-		env.EngineName = "EN" + utils.Encode(utils.GenerateAesKey(10))
+		hash := sha1.New()
+		hash.Write(utils.GenerateAesKey(10))
+		hashDigest := hash.Sum(nil)
+
+		hashString := fmt.Sprintf("%x", hashDigest)
+		env.EngineName = "EN_" + hashString
 	}
 
 	value, found = os.LookupEnv("ENGINE_MODE")

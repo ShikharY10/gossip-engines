@@ -63,7 +63,6 @@ func init() {
 }
 
 func main() {
-
 	ctrl := controller_v1.Controller{
 		Handler: &HANDLERS,
 		Logger:  LOGGER,

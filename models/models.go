@@ -25,6 +25,12 @@ type PartnerResponse struct {
 	SharedKey   string `json:"key"`
 }
 
+type RemovePartner struct {
+	ID           string `json:"id"`
+	ExtraditorId string `json:"extraditorId"`
+	ExtraditeeId string `json:"extraditeeId"`
+}
+
 type User struct {
 	ID               primitive.ObjectID   `bson:"_id,omitempty" json:"_id,omitempty"`
 	Name             string               `bson:"name" json:"name,omitempty"`
